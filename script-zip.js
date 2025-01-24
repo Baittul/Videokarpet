@@ -56,3 +56,38 @@ function enterFullscreen(videoId) {
         video.msRequestFullscreen(); // IE/Edge
     }
 }
+// Ambil semua elemen video
+const videos = document.querySelectorAll('.video-player');
+
+// Fungsi untuk menghentikan video
+function pauseVideo(video) {
+    if (!video.paused) {
+        video.pause(); // Hentikan video
+        video.currentTime = 0; // Reset ke awal video
+    }
+}
+
+// Menggunakan Intersection Observer API
+const observer = new IntersectionObserver(
+    (entries) => {
+        entries.forEach((entry) => {
+            const video = entry.target;
+            if (entry.isIntersecting) {
+                // Video terlihat di layar, tidak perlu berhenti
+                console.log(`Video ${video.getAttribute('data-id')} terlihat`);
+            } else {
+                // Video tidak terlihat, hentikan otomatis
+                console.log(`Video ${video.getAttribute('data-id')} keluar dari layar`);
+                pauseVideo(video);
+            }
+        });
+    },
+    {
+        threshold: 0.5, // Video minimal 50% terlihat untuk dianggap dalam layar
+    }
+);
+
+// Daftarkan setiap video ke observer
+videos.forEach((video) => {
+    observer.observe(video);
+});
