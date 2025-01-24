@@ -83,7 +83,7 @@ const observer = new IntersectionObserver(
         });
     },
     {
-        threshold: 0.5, // Video minimal 50% terlihat untuk dianggap dalam layar
+        threshold: 0.3, // Video minimal 50% terlihat untuk dianggap dalam layar
     }
 );
 
